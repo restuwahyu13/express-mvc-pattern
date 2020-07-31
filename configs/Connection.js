@@ -1,19 +1,19 @@
-const { Module } = require('./Module');
+const { Module } = require('./Module')
 class Connection extends Module {
-    constructor() {
-
-        super();
-
-        this.db = this.mongoose();
-    }
-    MongooseConnection() {
-
-        const { db } = this;
-
-        db.connect(process.env.URI_CONNECT, { useUnifiedTopology: true, useNewUrlParser: true })
-            .then(() => console.log('Database Connected'))
-            .catch(() => console.log('Database Error'));
-    }
+  constructor() {
+    super()
+    this.db = this.mongoose()
+  }
+  MongooseConnection() {
+    const { db } = this
+    db.connect(process.env.MONGO_URI, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useFindAndModify: true
+    })
+      .then(() => console.log('Database Connected'))
+      .catch(() => console.log('Database Not Connected'))
+  }
 }
 
-module.exports = { Connection };
+module.exports = { Connection }

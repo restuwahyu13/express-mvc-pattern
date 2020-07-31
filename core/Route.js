@@ -1,35 +1,33 @@
 // route mahasiswa
-const { CreateMahasiswaRoute } = require('../app/routes/mhs.route/create.route');
-const { ResultsMahasiswaRoute } = require('../app/routes/mhs.route/results.route');
-const { ResultMahasiswaRoute } = require('../app/routes/mhs.route/result.route');
-const { DeleteMahasiswaRoute } = require('../app/routes/mhs.route/delete.route');
-const { UpdateMahasiswaRoute } = require('../app/routes/mhs.route/update.route');
+const { CreateMahasiswaRoute } = require(`${process.cwd()}/app/routes/mhs/create.route`)
+const { ResultsMahasiswaRoute } = require(`${process.cwd()}/app/routes/mhs/results.route`)
+const { ResultMahasiswaRoute } = require(`${process.cwd()}/app/routes/mhs/result.route`)
+const { DeleteMahasiswaRoute } = require(`${process.cwd()}/app/routes/mhs/delete.route`)
+const { UpdateMahasiswaRoute } = require(`${process.cwd()}/app/routes/mhs/update.route`)
 // route refesh token
-const { RefeshTokenRoute } = require('../app/routes/refesh.route/refesh.route');
+const { RefeshTokenRoute } = require(`${process.cwd()}/app/routes/refesh/refesh.route`)
 //route home
-const { HomeRoute } = require('../app/routes/home.route/home.route');
-const { AboutRoute } = require('../app/routes/home.route/about.route');
+const { HomeRoute } = require(`${process.cwd()}/app/routes/home/home.route`)
+const { AboutRoute } = require(`${process.cwd()}/app/routes/home/about.route`)
 
 class Route {
-    static defaultRoute(app) {
+  static defaultRoute(app) {
+    return [
+      // init mahasiswa route
+      new CreateMahasiswaRoute(app).Route(),
+      new ResultsMahasiswaRoute(app).Route(),
+      new ResultMahasiswaRoute(app).Route(),
+      new DeleteMahasiswaRoute(app).Route(),
+      new UpdateMahasiswaRoute(app).Route(),
 
-        return [
+      // init refesh token route
+      new RefeshTokenRoute(app).Route(),
 
-            // init mahasiswa route
-            new CreateMahasiswaRoute(app).Route(),
-            new ResultsMahasiswaRoute(app).Route(),
-            new ResultMahasiswaRoute(app).Route(),
-            new DeleteMahasiswaRoute(app).Route(),
-            new UpdateMahasiswaRoute(app).Route(),
-
-            // init refesh token route
-            new RefeshTokenRoute(app).Route(),
-
-            //init home route
-            new HomeRoute(app).Route(),
-            new AboutRoute(app).Route()
-        ]
-    }
+      //init home route
+      new HomeRoute(app).Route(),
+      new AboutRoute(app).Route()
+    ]
+  }
 }
 
-module.exports = { Route };
+module.exports = { Route }

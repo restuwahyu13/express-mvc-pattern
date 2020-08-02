@@ -11,7 +11,7 @@ const { HomeRoute } = require(`${process.cwd()}/app/routes/home/home.route`)
 const { AboutRoute } = require(`${process.cwd()}/app/routes/home/about.route`)
 
 class Route {
-  static defaultRoute(app) {
+  defaultRoute(app) {
     return [
       // init mahasiswa route
       new CreateMahasiswaRoute(app).Route(),

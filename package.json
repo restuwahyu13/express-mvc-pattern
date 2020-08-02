@@ -4,7 +4,8 @@
   "description": "example oop and mvc arcitecture express",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -e js server.js"
+  	"start": "node .",
+    "dev": "nodemon server.js"
   },
   "repository": {
     "type": "git",

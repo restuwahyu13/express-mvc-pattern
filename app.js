@@ -15,6 +15,6 @@ mod.morgan()
 new Connection().MongooseConnection()
 
 //init default route
-Route.defaultRoute(app)
+new Route().defaultRoute(app)
 
 module.exports = app

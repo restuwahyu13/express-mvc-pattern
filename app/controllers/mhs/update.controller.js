@@ -17,7 +17,7 @@ class UpdateMahasiswaController extends Model {
 
   async Controller() {
     const { req, res, id, name, npm, bid, fak, model, msg } = this
-    const user = await model.update({ _id: id }, { name, npm, bid, fak })
+    const user = await model.findOneAndUpdate({ _id: id }, { name, npm, bid, fak })
 
     if (!user) {
       msg.error('error', 404, {

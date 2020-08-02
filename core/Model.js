@@ -21,10 +21,10 @@ class Model {
     const user = model
       .findOne({ ...value })
       .lean()
-      .exec((err, doc) => {
+      .exec(async (err, doc) => {
         if (err) return error
-        const data = new model({ ...value })
-        return data.save()
+        const dataBody = new model({ ...value })
+        return dataBody.save()
       })
   }
   findOneAndDelete(value) {

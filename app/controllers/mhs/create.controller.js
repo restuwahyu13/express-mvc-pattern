@@ -15,7 +15,8 @@ class CreateMahasiswaController extends Model {
   async Controller() {
     const { req, res, model, msg, jwt } = this
     const { name, npm, bid, fak } = req.body
-    const user = await model.findOne({ name }).lean()
+
+    const user = await model.findOneAndCreate({ name, npm, bid, fak })
     if (user) {
       msg.error('error', 409, {
         response: {
@@ -28,7 +29,6 @@ class CreateMahasiswaController extends Model {
       })
     }
 
-    const { _id } = await model.create({ name, npm, bid, fak })
     const token = jwt.createToken({ _id, name }, { expiresIn: '1d', algorithm: 'HS384' })
     msg.success('success', 200, {
       response: {

@@ -13,7 +13,7 @@ class DeleteMahasiswaController extends Model {
 
   async Controller() {
     const { req, res, id, model, msg } = this
-    const user = await model.delete({ _id: _id })
+    const user = await model.findOneAndDelete({ _id: _id })
 
     if (!user) {
       msg.error('error', 404, {

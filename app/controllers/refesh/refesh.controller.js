@@ -16,7 +16,7 @@ class RefeshTokenController extends Model {
 
   async Controller() {
     const { req, res, name, npm, model, msg, jwt } = this
-    const users = await model.findAll().or([{ name }, { npm }])
+    const users = await model.findAll({ $or: [{ name }, { npm }] })
 
     if (users.length < 1) {
       msg.error('error', 404, {

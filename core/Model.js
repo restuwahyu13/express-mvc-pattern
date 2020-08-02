@@ -16,16 +16,22 @@ class Model {
     const { model } = this
     return model.findById(value).lean()
   }
-  create(value) {
+  findOneAndCreate(value) {
     const { model } = this
-    const data = new model({ ...value })
-    return data.save()
+    const user = model
+      .findOne({ ...value })
+      .lean()
+      .exec((err, doc) => {
+        if (err) return error
+        const data = new model({ ...value })
+        return data.save()
+      })
   }
-  delete(value) {
+  findOneAndDelete(value) {
     const { model } = this
     return model.findOneAndDelete({ ...value }).lean()
   }
-  update(action, value) {
+  findOneAndUpdate(action, value) {
     const { model } = this
     return model.findOneAndUpdate({ ...action }, { $set: { ...value } }).lean()
   }

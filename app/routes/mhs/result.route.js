@@ -3,16 +3,13 @@ const { Controller } = require(`${process.cwd()}/core/Controller`)
 const { mhsSchema } = require(`${process.cwd()}/app/models/mhs.model`)
 const AuthToken = require(`${process.cwd()}/app/middlewares/AuthToken`)
 class ResultMahasiswaRoute extends Controller {
-  constructor(app) {
+  constructor() {
     super()
-    this.controller = new Controller(app)
-    this.schema = mhsSchema
+    this.controller = new Controller()
   }
   route() {
-    const { controller, schema } = this
-    controller.get('/mhs/result/:id', AuthToken, (req, res) => {
-      return new ResultMahasiswaController('mhs', schema, req, res).Controller()
-    })
+    const { controller } = this
+    return controller.get('/mhs/result/:id', new ResultMahasiswaController().controller)
   }
 }
 

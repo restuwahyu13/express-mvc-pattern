@@ -3,16 +3,13 @@ const { Controller } = require(`${process.cwd()}/core/Controller`)
 const { mhsSchema } = require(`${process.cwd()}/app/models/mhs.model`)
 const AuthToken = require(`${process.cwd()}/app/middlewares/AuthToken`)
 class DeleteMahasiswaRoute extends Controller {
-  constructor(app) {
+  constructor() {
     super()
-    this.controller = new Controller(app)
-    this.schema = mhsSchema
+    this.controller = new Controller()
   }
   route() {
     const { controller, schema } = this
-    controller.delete('/mhs/delete/:id', AuthToken, (req, res) => {
-      return new DeleteMahasiswaController('mhs', schema, req, res).Controller()
-    })
+    return controller.delete('/mhs/delete/:id', new DeleteMahasiswaController().controller)
   }
 }
 

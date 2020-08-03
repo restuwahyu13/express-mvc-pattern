@@ -9,12 +9,12 @@ class CustomeMessage {
   success(statusCode, message) {
     const { response, events } = this
     events.once('success', () => response.status(statusCode).json({ ...message }))
-    return events.emit(event)
+    return events.emit('success')
   }
   error(statusCode, message) {
     const { response, events } = this
     events.once('error', () => response.status(statusCode).json({ ...message }))
-    return events.emit(event)
+    return events.emit('error')
   }
 }
 

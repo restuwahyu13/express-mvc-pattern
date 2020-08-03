@@ -4,16 +4,14 @@ const { mhsSchema } = require(`${process.cwd()}/app/models/mhs.model`)
 const AuthToken = require(`${process.cwd()}/app/middlewares/AuthToken`)
 
 class UpdateMahasiswaRoute extends Controller {
-  constructor(app) {
+  constructor() {
     super()
-    this.controller = new Controller(app)
+    this.controller = new Controller()
     this.schema = mhsSchema
   }
   route() {
     const { controller, schema } = this
-    controller.put('/mhs/update/:id', AuthToken, (req, res) => {
-      return new UpdateMahasiswaController('mhs', schema, req, res).Controller()
-    })
+    return controller.put('/mhs/update/:id', new UpdateMahasiswaController().controller)
   }
 }
 

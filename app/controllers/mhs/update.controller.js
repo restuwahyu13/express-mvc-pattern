@@ -1,24 +1,17 @@
 const { Model } = require(`${process.cwd()}/core/Model`)
 const { CustomeMessage } = require(`${process.cwd()}/app/helpers/customeMessage`)
-
 class UpdateMahasiswaController extends Model {
-  constructor(collection, schema, req, res) {
+  constructor() {
     super()
-    this.req = req
-    this.res = res
-    this.id = req.params.id
-    this.body = req.body
-    this.model = new Model(collection, schema)
-    this.msg = new CustomeMessage(res)
   }
 
-  async controller() {
-    const { req, res, id, body, model, msg } = this
-    const { name, npm, bid, fak } = body
+  async controller(req, res, next) {
+    const { id } = req.params
+    const { name, npm, bid, fak } = req.body
     const user = await model.findOneAndUpdate({ _id: id }, { name, npm, bid, fak })
 
     if (!user) {
-      msg.error(404, {
+      new CustomeMessage(res).error(404, {
         response: {
           status: 'error',
           code: res.statusCode,
@@ -28,7 +21,7 @@ class UpdateMahasiswaController extends Model {
       })
     }
 
-    msg.success(200, {
+    new CustomeMessage(res).success(200, {
       response: {
         status: 'success',
         code: res.statusCode,

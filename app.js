@@ -1,4 +1,5 @@
-const app = require('express')()
+const express = require('express')
+const app = express()
 const { Module } = require('./configs/Module')
 const { Connection } = require('./configs/Connection')
 const { Route } = require('./core/Route')
@@ -15,6 +16,6 @@ mod.morgan()
 new Connection().MongooseConnection()
 
 //init default route
-new Route().Routes(app)
+app.use(new Route().route())
 
 module.exports = app

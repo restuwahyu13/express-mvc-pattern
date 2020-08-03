@@ -11,21 +11,21 @@ const { HomeRoute } = require(`${process.cwd()}/app/routes/home/home.route`)
 const { AboutRoute } = require(`${process.cwd()}/app/routes/home/about.route`)
 
 class Route {
- Routes(app) {
+  route() {
     return [
       // init mahasiswa route
-      new CreateMahasiswaRoute(app).route(),
-      new ResultsMahasiswaRoute(app).route(),
-      new ResultMahasiswaRoute(app).route(),
-      new DeleteMahasiswaRoute(app).route(),
-      new UpdateMahasiswaRoute(app).route(),
+      new CreateMahasiswaRoute().route(),
+      new ResultsMahasiswaRoute().route(),
+      new ResultMahasiswaRoute().route(),
+      new DeleteMahasiswaRoute().route(),
+      new UpdateMahasiswaRoute().route(),
 
       // init refesh token route
-      new RefeshTokenRoute(app).route(),
+      new RefeshTokenRoute().route(),
 
       //init home route
-      new HomeRoute(app).route(),
-      new AboutRoute(app).route()
+      new HomeRoute().route(),
+      new AboutRoute().route()
     ]
   }
 }

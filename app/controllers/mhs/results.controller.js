@@ -1,20 +1,16 @@
 const { Model } = require(`${process.cwd()}/core/Model`)
 const { CustomeMessage } = require(`${process.cwd()}/app/helpers/customeMessage`)
-
 class ResultsMahasiswaController extends Model {
-  constructor(collection, schema, req, res) {
+  constructor() {
     super()
-    this.req = req
-    this.res = res
-    this.model = new Model(collection, schema)
-    this.msg = new CustomeMessage(res)
   }
-  async controller() {
-    const { req, res, model, msg } = this
-    const users = await model.findAll()
+
+  async controller(req, res, next) {
+    const { msg } = this
+    const users = await this.findAll()
 
     if (users.length < 1) {
-      msg.error(404, {
+      new CustomeMessage(res).error(404, {
         response: {
           status: 'error',
           code: res.statusCode,
@@ -24,7 +20,7 @@ class ResultsMahasiswaController extends Model {
       })
     }
 
-    msg.success(200, {
+    new CustomeMessage(res).success(200, {
       response: {
         status: 'success',
         code: res.statusCode,

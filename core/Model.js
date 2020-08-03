@@ -1,8 +1,8 @@
 const { Module } = require(`${process.cwd()}/configs/Module`)
-
+const mongoose = new Module().mongoose()
 class Model {
   constructor(collection, schema) {
-    this.model = new Module().mongoose().model(collection, schema)
+    this.model = new Module().mongoose().model(`${collection}`, new mongoose.Schema({ ...schema }))
   }
   findAll() {
     const { model } = this

@@ -1,22 +1,17 @@
+const express = require('express')
+const router = express.Router()
 class Controller {
-  constructor(app) {
-    this.app = app
-  }
   get(...rest) {
-    const { app } = this
-    app.get(...arguments)
+    return [router.get(...arguments)]
   }
   post(...rest) {
-    const { app } = this
-    app.post(...arguments)
+    return [router.post(...arguments)]
   }
   delete(...rest) {
-    const { app } = this
-    app.delete(...arguments)
+    return [router.delete(...arguments)]
   }
   put(...rest) {
-    const { app } = this
-    app.put(...arguments)
+    return [router.put(...arguments)]
   }
 }
 

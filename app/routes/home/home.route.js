@@ -1,9 +1,9 @@
 const { Controller } = require(`${process.cwd()}/core/Controller`)
 const { View } = require(`${process.cwd()}/core/View`)
 class HomeRoute extends Controller {
-  constructor(app) {
+  constructor() {
     super()
-    this.controller = new Controller(app)
+    this.controller = new Controller()
     this.view = new View()
   }
   route() {

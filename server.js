@@ -18,7 +18,7 @@ class App {
         cluster.fork()
       })
     } else {
-      return http.createServer(app).listen(process.env.PORT)
+      http.createServer(app).listen(process.env.PORT)
     }
   }
 }

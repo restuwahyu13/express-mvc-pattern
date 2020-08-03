@@ -1,8 +1,6 @@
-const { Module } = require(`${process.cwd()}/configs/Module`)
-const mongoose = new Module().mongoose()
+const { Model } = require(`${process.cwd()}/core/Model`)
 
-// init schema
-const mhsSchema = new mongoose.Schema({
+new Model('mhs', {
   name: {
     type: String,
     trim: true,
@@ -32,5 +30,3 @@ const mhsSchema = new mongoose.Schema({
     default: null
   }
 })
-
-module.exports = { mhsSchema }

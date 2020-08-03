@@ -3,14 +3,11 @@ const { Controller } = require(`${process.cwd()}/core/Controller`)
 const AuthToken = require(`${process.cwd()}/app/middlewares/AuthToken`)
 class ResultMahasiswaRoute extends Controller {
   constructor() {
-    super()
-    this.controller = new Controller()
+    this.auth = AuthToken
   }
   route() {
-    const { controller } = this
-    return controller.get('/mhs/result/:id', (req, res) =>
-      new ResultMahasiswaController().controller(req, res)
-    )
+    const { auth } = this
+    return super.get('/mhs/result/:id', (req, res) => new ResultMahasiswaController().controller(req, res))
   }
 }
 

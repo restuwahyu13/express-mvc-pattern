@@ -4,12 +4,10 @@ const AuthToken = require(`${process.cwd()}/app/middlewares/AuthToken`)
 
 class UpdateMahasiswaRoute extends Controller {
   constructor() {
-    super()
-    this.controller = new Controller()
+    this.auth = AuthToken
   }
   route() {
-    const { controller } = this
-    return controller.put('/mhs/update/:id', (req, res) =>
+    return super.put('/mhs/update/:id', auth, (req, res) =>
       new UpdateMahasiswaController().controller(req, res)
     )
   }

@@ -67,99 +67,93 @@ class Controller {
   constructor(app) {
     this.app = app
   }
-  GET(route, auth, callback) {
+  get(...rest) {
     const { app } = this
-
-    app.get(route, auth, callback)
+    app.get(...arguments)
   }
-  POST(route, callback) {
+  post(...rest) {
     const { app } = this
-
-    app.post(route, callback)
+    app.post(...arguments)
   }
-  DELETE(route, auth, callback) {
+  delete(...rest) {
     const { app } = this
-
-    app.delete(route, auth, callback)
+    app.delete(...arguments)
   }
-  PUT(route, auth, callback) {
+  put(...rest) {
     const { app } = this
-
-    app.put(route, auth, callback)
+    app.put(...arguments)
   }
 }
+
 module.exports = { Controller }
 ```
 
 #### Core Model
 
 ```javascript
-const { Module } = require('../configs/Module')
 class Model {
   constructor(collection, schema) {
     this.model = new Module().mongoose().model(collection, schema)
   }
   findAll() {
     const { model } = this
-    return model.find({}).lean(true)
+    return model.find({}).lean()
   }
   findOne(value) {
     const { model } = this
-    return model.findOne({ ...value }).lean(true)
+    return model.findOne({ ...value }).lean()
   }
-  create(value) {
+  findById(value) {
     const { model } = this
-    const data = new model({ ...value })
-    return data.save()
+    return model.findById(value).lean()
   }
-  delete(value) {
+  findOneAndCreate(value) {
     const { model } = this
-    return model.deleteOne({ ...value })
+    const user = model
+      .findOne({ ...value })
+      .lean()
+      .exec(async (err, doc) => {
+        if (err) return error
+        const dataBody = new model({ ...value })
+        return dataBody.save()
+      })
   }
-  update(action, value) {
+  findOneAndDelete(value) {
     const { model } = this
-    return model.updateOne({ ...action }, { ...value })
+    return model.findOneAndDelete({ ...value }).lean()
+  }
+  findOneAndUpdate(action, value) {
+    const { model } = this
+    return model.findOneAndUpdate({ ...action }, { $set: { ...value } }).lean()
   }
 }
+
 module.exports = { Model }
 ```
 
 #### Core Route
 
 ```javascript
-// route mahasiswa
-const { CreateMahasiswaRoute } = require('../app/routes/mhs.route/create.route')
-const { ResultsMahasiswaRoute } = require('../app/routes/mhs.route/results.route')
-const { ResultMahasiswaRoute } = require('../app/routes/mhs.route/result.route')
-const { DeleteMahasiswaRoute } = require('../app/routes/mhs.route/delete.route')
-const { UpdateMahasiswaRoute } = require('../app/routes/mhs.route/update.route')
-
-// route refesh token
-const { RefeshTokenRoute } = require('../app/routes/refesh.route/refesh.route')
-
-//route home
-const { HomeRoute } = require('../app/routes/home.route/home.route')
-const { AboutRoute } = require('../app/routes/home.route/about.route')
-
-class Route {
-  static defaultRoute(app) {
+/class Route {
+ Routes(app) {
     return [
       // init mahasiswa route
-      new CreateMahasiswaRoute(app).Route(),
-      new ResultsMahasiswaRoute(app).Route(),
-      new ResultMahasiswaRoute(app).Route(),
-      new DeleteMahasiswaRoute(app).Route(),
-      new UpdateMahasiswaRoute(app).Route(),
+      new CreateMahasiswaRoute(app).route(),
+      new ResultsMahasiswaRoute(app).route(),
+      new ResultMahasiswaRoute(app).route(),
+      new DeleteMahasiswaRoute(app).route(),
+      new UpdateMahasiswaRoute(app).route(),
 
       // init refesh token route
-      new RefeshTokenRoute(app).Route(),
+      new RefeshTokenRoute(app).route(),
 
       //init home route
-      new HomeRoute(app).Route(),
-      new AboutRoute(app).Route()
+      new HomeRoute(app).route(),
+      new AboutRoute(app).route()
     ]
   }
 }
+
 module.exports = { Route }
 ```
 
@@ -167,31 +161,35 @@ module.exports = { Route }
 
 ```javascript
 class View {
-  static view(res, view, data) {
-    res.render('../../app/views/' + view, data)
+  render(res, view, data) {
+    res.render(resolve(process.cwd(), `app/views/${view}`), { ...data })
   }
 }
+
 module.exports = { View }
 ```
 
 #### Config Connection
 
 ```javascript
-const { Module } = require('./Module')
 class Connection extends Module {
   constructor() {
     super()
-
     this.db = this.mongoose()
   }
-  MongooseConnection() {
+  async MongooseConnection() {
     const { db } = this
+    const connection = await db.connect(process.env.MONGO_URI, {
+      useUnifiedTopology: true,
+      useNewUrlParser: true,
+      useFindAndModify: true
+    })
 
-    db.connect(process.env.URI_CONNECT, { useUnifiedTopology: true, useNewUrlParser: true })
-      .then(() => console.log('Database Connected'))
-      .catch(() => console.log('Database Error'))
+    if (!connection) return console.log('Database Connection Failed')
+    return console.log('Database Connection Successfuly')
   }
 }
+
 module.exports = { Connection }
 ```
 
@@ -199,137 +197,145 @@ module.exports = { Connection }
 
 ```javascript
 class Module {
-  constructor(app = null) {
+  constructor(app) {
     this.app = app
   }
   dotenv() {
-    const dotenv = require('dotenv')
     const env = dotenv.config()
     return env
   }
   bodyParser() {
     const { app } = this
 
-    const bodyParser = require('body-parser')
     app.use(bodyParser.urlencoded({ extended: false }))
     app.use(bodyParser.json())
   }
   mongoose() {
-    const mongoose = require('mongoose')
     mongoose.Promise = global.Promise
     return mongoose
   }
   morgan() {
     const { app } = this
-
-    const logger = require('morgan')
     app.use(logger('dev'))
   }
   event() {
-    const EventEmitter = require('events')
     const events = new EventEmitter()
     return events
   }
 
   jwt() {
-    const jwt = require('jsonwebtoken')
-    return jwt
+    return jsonwebtoken
   }
 
   template() {
     const { app } = this
-    const path = require('path')
-
-    app.set('views', path.join(__dirname, '/views'))
+    app.set('views', path.resolve(process.cwd(), 'views'))
     app.set('view engine', 'ejs')
   }
 
-  assets(express) {
+  assets() {
     const { app } = this
-    const path = require('path')
-    app.use(express.static(path.join(__dirname, '../public/assets/')))
+    app.use(express.static(path.resolve(process.cwd(), 'public/assets/')))
   }
 }
+
 module.exports = { Module }
 ```
 
 #### App Controller
 
 ```javascript
-const { Model } = require('../../../core/Model')
-const { CustomeMessage } = require('../../helpers/customeMessage')
-class ResultsMahasiswaController extends Model {
+class CreateMahasiswaController extends Model {
   constructor(collection, schema, req, res) {
-    super(collection, schema)
+    super()
     this.req = req
     this.res = res
     this.model = new Model(collection, schema)
     this.msg = new CustomeMessage(res)
+    this.jwt = new Jwt()
   }
-  async Controller() {
-    const { req, res, model, msg } = this
-    await model
-      .findAll()
-      .then((result) => {
-        if (result) {
-          msg.success('success', 200, {
-            response: {
-              status: 'success',
-              code: res.statusCode,
-              method: req.method,
-              message: 'Yeah..data already to use',
-              data: {
-                result: result
-              }
-            }
-          })
-        } else {
-          msg.error('error', 404, {
-            response: {
-              status: 'error',
-              code: 404,
-              method: req.method,
-              message: 'Oops..data not found in database or deleted'
-            }
-          })
+
+  async controller() {
+    const { req, res, model, msg, jwt } = this
+    const { name, npm, bid, fak } = req.body
+    const user = await model.findOneAndCreate({ name, npm, bid, fak })
+
+    if (user) {
+      msg.error('error', 409, {
+        response: {
+          status: 'error',
+          code: res.statusCode,
+          method: req.method,
+          message: 'Oops..data already exists in database',
+          data: { ...user }
         }
       })
-      .catch((err) => {
-        msg.error('error', 500, {
-          response: {
-            status: 'error',
-            code: res.statusCode,
-            method: req.method,
-            message: `Internal server error ${err}`
-          }
-        })
-      })
+    }
+
+    const token = jwt.createToken({ _id, name }, { expiresIn: '1d', algorithm: 'HS384' })
+    msg.success('success', 200, {
+      response: {
+        status: 'success',
+        code: res.statusCode,
+        method: req.method,
+        message: 'Yeah..data successuly store in database',
+        data: {
+          secret: token
+        }
+      }
+    })
   }
 }
-module.exports = { ResultsMahasiswaController }
+
+module.exports = { CreateMahasiswaController }
 ```
 
 #### App Route
 
 ```javascript
-const { CreateMahasiswaController } = require('../../controllers/mhs.controller/create.controller')
-const { mhsSchema } = require('../../models/mhs.model')
-const { Controller } = require('../../../core/Controller')
-
 class CreateMahasiswaRoute extends Controller {
   constructor(app) {
-    super(app)
+    super()
     this.controller = new Controller(app)
     this.schema = mhsSchema
   }
-  Route() {
+  route() {
     const { controller, schema } = this
-    controller.POST('/mhs/create', (req, res) => {
+    controller.post('/mhs/create', (req, res) => {
       return new CreateMahasiswaController('mhs', schema, req, res).Controller()
     })
   }
 }
+
 module.exports = { CreateMahasiswaRoute }
+```
+
+#### App
+
+```javascript
+class App {
+  server() {
+    if (cluster.isMaster) {
+      let cpuCore = os.cpus().length
+      for (let i = 0; i < cpuCore; i++) {
+        cluster.fork()
+      }
+      cluster.on('online', (worker) => {
+        if (worker.isConnected()) console.log(`worker is active ${worker.process.pid}`)
+      })
+
+      cluster.on('exit', (worker) => {
+        if (worker.isDead()) console.log(`worker is dead ${worker.process.pid}`)
+        cluster.fork()
+      })
+    } else {
+      return http.createServer(app).listen(process.env.PORT)
+    }
+  }
+}
+
+// init application
+new App().server()
 ```
 
 **Semoga** dengan adanya tutorial ini bisa membantu teman - teman semua yang sedang belajar, khususnya belajar **NodeJs** dan nantinya bisa menerapkan konsep **MVC** pada aplikasi yang akan dibuat oleh teman - teman. **Terimakasih**

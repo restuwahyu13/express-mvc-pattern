@@ -20,7 +20,6 @@
 | result mahasiswa  | http://localhost:3000/mhs/result  |
 | delete mahasiswa  | http://localhost:3000/mhs/delete  |
 | update mahasiswa  | http://localhost:3000/mhs/update  |
-| refesh token      | http://localhost:3000/refeshtoken |
 
 #### Struktur Folder:
 

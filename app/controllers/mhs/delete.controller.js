@@ -16,7 +16,7 @@ class DeleteMahasiswaController extends Model {
     const user = await model.findOneAndDelete({ _id: _id })
 
     if (!user) {
-      msg.error('error', 404, {
+      msg.error(404, {
         response: {
           status: 'error',
           code: res.statusCode,
@@ -26,7 +26,7 @@ class DeleteMahasiswaController extends Model {
       })
     }
 
-    msg.success('success', 200, {
+    msg.success(200, {
       response: {
         status: 'success',
         code: res.statusCode,

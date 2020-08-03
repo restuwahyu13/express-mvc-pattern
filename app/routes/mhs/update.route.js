@@ -2,6 +2,7 @@ const { UpdateMahasiswaController } = require(`${process.cwd()}/app/controllers/
 const { Controller } = require(`${process.cwd()}/core/Controller`)
 const { mhsSchema } = require(`${process.cwd()}/app/models/mhs.model`)
 const AuthToken = require(`${process.cwd()}/app/middlewares/AuthToken`)
+
 class UpdateMahasiswaRoute extends Controller {
   constructor(app) {
     super(app)

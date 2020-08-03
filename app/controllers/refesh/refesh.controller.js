@@ -32,7 +32,7 @@ class RefeshTokenController extends Model {
     const { _id } = users[0]
     const refeshToken = jwt.createToken({ _id, name }, { expiresIn: '7d', algorithm: 'HS384' })
 
-    msg.success('success', 200, {
+    msg.success(200, {
       response: {
         status: 'success',
         code: res.statusCode,

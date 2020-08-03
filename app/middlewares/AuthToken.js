@@ -16,10 +16,9 @@ module.exports = (req, res, next) => {
     }
   } catch (err) {
     //msg if token failed or expaired
-    msg.error('error', 401, {
+    msg.error(401, {
       response: {
-        status: 'error',
-        code: 401,
+        status: res.statusCode,
         method: req.method,
         url: req.originalUrl,
         message: `Oops..Unauthorized access, please give valid token`

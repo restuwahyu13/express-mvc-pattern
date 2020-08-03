@@ -14,7 +14,7 @@ class ResultsMahasiswaController extends Model {
     const users = await model.findAll()
 
     if (users.length < 1) {
-      msg.error('error', 404, {
+      msg.error(404, {
         response: {
           status: 'error',
           code: res.statusCode,
@@ -24,7 +24,7 @@ class ResultsMahasiswaController extends Model {
       })
     }
 
-    msg.success('success', 200, {
+    msg.success(200, {
       response: {
         status: 'success',
         code: res.statusCode,

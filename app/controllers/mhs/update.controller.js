@@ -20,7 +20,7 @@ class UpdateMahasiswaController extends Model {
     const user = await model.findOneAndUpdate({ _id: id }, { name, npm, bid, fak })
 
     if (!user) {
-      msg.error('error', 404, {
+      msg.error(404, {
         response: {
           status: 'error',
           code: res.statusCode,
@@ -30,7 +30,7 @@ class UpdateMahasiswaController extends Model {
       })
     }
 
-    msg.success('success', 200, {
+    msg.success(200, {
       response: {
         status: 'success',
         code: res.statusCode,

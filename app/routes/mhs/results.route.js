@@ -4,7 +4,7 @@ const { mhsSchema } = require(`${process.cwd()}/app/models/mhs.model`)
 const AuthToken = require(`${process.cwd()}/app/middlewares/AuthToken`)
 class ResultsMahasiswaRoute extends Controller {
   constructor(app) {
-    super(app)
+    super()
     this.controller = new Controller(app)
     this.schema = mhsSchema
     this.auth = AuthToken

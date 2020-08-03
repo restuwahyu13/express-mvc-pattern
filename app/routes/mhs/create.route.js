@@ -3,7 +3,7 @@ const { mhsSchema } = require(`${process.cwd()}/app/models/mhs.model`)
 const { Controller } = require(`${process.cwd()}/core/Controller`)
 class CreateMahasiswaRoute extends Controller {
   constructor(app) {
-    super(app)
+    super()
     this.controller = new Controller(app)
     this.schema = mhsSchema
   }

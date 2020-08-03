@@ -9,7 +9,7 @@ class Connection extends Module {
     const connection = await db.connect(process.env.MONGO_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
-      useFindAndModify: true
+      useFindAndModify: false
     })
 
     if (!connection) return console.log('Database Connection Failed')

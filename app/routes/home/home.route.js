@@ -8,8 +8,7 @@ class HomeRoute extends Controller {
   }
   route() {
     const { controller, view } = this
-
-    controller.get('/', (req, res) => {
+    return controller.get('/', (req, res) => {
       view.render(res, 'home.views/index', {
         name: 'Restu Wahyu Saputra'
       })

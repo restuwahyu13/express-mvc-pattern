@@ -1,12 +1,11 @@
-const { Module } = require(`${process.cwd()}/configs/Module`)
-const mongoose = new Module().mongoose()
 class Model {
-  constructor(collection, schema) {
-    this.model = new Module().mongoose().model(`${collection}`, new mongoose.Schema({ ...schema }))
+  constructor(schema) {
+    this.model = schema
   }
-  findAll() {
+
+  findAll(value) {
     const { model } = this
-    return model.find({}).lean()
+    return model.find({ ...value }).lean()
   }
   findOne(value) {
     const { model } = this
@@ -16,24 +15,17 @@ class Model {
     const { model } = this
     return model.findById(value).lean()
   }
-  findOneAndCreate(value) {
+  async findOneAndCreate(value) {
     const { model } = this
-    const user = model
-      .findOne({ ...value })
-      .lean()
-      .exec(async (err, doc) => {
-        if (err) return error
-        const dataBody = new model({ ...value })
-        return dataBody.save()
-      })
+    return model.create({ ...value })
   }
   findOneAndDelete(value) {
     const { model } = this
     return model.findOneAndDelete({ ...value }).lean()
   }
-  findOneAndUpdate(action, value) {
+  findOneAndUpdate(id, value) {
     const { model } = this
-    return model.findOneAndUpdate({ ...action }, { $set: { ...value } }).lean()
+    return model.findOneAndUpdate({ ...id }, { $set: { ...value } }).lean()
   }
 }
 

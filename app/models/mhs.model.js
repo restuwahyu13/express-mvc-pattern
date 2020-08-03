@@ -1,7 +1,10 @@
 const { Model } = require(`${process.cwd()}/core/Model`)
+const { Module } = require(`${process.cwd()}/configs/Module`)
+const mongoose = new Module().mongoose()
 
-new Model('mhs', {
-  name: {
+// init schema
+const setMhsSchema = {
+  nama: {
     type: String,
     trim: true,
     required: true
@@ -29,4 +32,7 @@ new Model('mhs', {
     type: Date,
     default: null
   }
-})
+}
+
+const mhsSchema = mongoose.model('mhs', new mongoose.Schema(setMhsSchema))
+module.exports = { mhsSchema }

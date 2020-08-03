@@ -134,8 +134,8 @@ module.exports = { Model }
 #### Core Route
 
 ```javascript
-/class Route {
- Routes(app) {
+class Route {
+  Routes(app) {
     return [
       // init mahasiswa route
       new CreateMahasiswaRoute(app).route(),

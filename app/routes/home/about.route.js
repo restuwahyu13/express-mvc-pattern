@@ -4,12 +4,12 @@ class AboutRoute extends Controller {
   constructor(app) {
     super(app)
     this.controller = new Controller(app)
-    this.v = View
+    this.view = new View()
   }
   route() {
     let { controller, v } = this
     controller.get('/about', (req, res) => {
-      v.view(res, 'home.views/about', {
+      v.render(res, 'home.views/about', {
         title1: 'Follow Me in Github:',
         title2: 'restuwahyu13',
         title3: 'Follow Me in Facebook:',

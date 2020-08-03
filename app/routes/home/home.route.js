@@ -4,12 +4,12 @@ class HomeRoute extends Controller {
   constructor(app) {
     super(app)
     this.controller = new Controller(app)
-    this.v = View
+    this.view = new View()
   }
   route() {
     let { controller, v } = this
     controller.get('/', (req, res) => {
-      v.view(res, 'home.views/index', {
+      view.render(res, 'home.views/index', {
         name: 'Restu Wahyu Saputra'
       })
     })

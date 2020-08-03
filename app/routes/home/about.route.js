@@ -3,12 +3,11 @@ const { View } = require(`${process.cwd()}/core/View`)
 class AboutRoute extends Controller {
   constructor() {
     super()
-    this.controller = new Controller()
     this.view = new View()
   }
   route() {
-    const { controller, view } = this
-    return controller.get('/about', (req, res) => {
+    const { view } = this
+    return this.get('/about', (req, res) => {
       view.render(res, 'home.views/about', {
         title1: 'Follow Me in Github:',
         title2: 'restuwahyu13',

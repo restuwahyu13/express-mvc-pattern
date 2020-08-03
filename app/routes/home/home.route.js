@@ -3,12 +3,11 @@ const { View } = require(`${process.cwd()}/core/View`)
 class HomeRoute extends Controller {
   constructor() {
     super()
-    this.controller = new Controller()
     this.view = new View()
   }
   route() {
-    const { controller, view } = this
-    return controller.get('/', (req, res) => {
+    const { view } = this
+    return this.get('/', (req, res) => {
       view.render(res, 'home.views/index', {
         name: 'Restu Wahyu Saputra'
       })

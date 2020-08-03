@@ -2,21 +2,21 @@ class Controller {
   constructor(app) {
     this.app = app
   }
-  GET(path, callback) {
+  get(...rest) {
     const { app } = this
-    app.get(path, callback)
+    app.get(...arguments)
   }
-  POST(path, callback) {
+  post(...rest) {
     const { app } = this
-    app.post(path, callback)
+    app.post(...arguments)
   }
-  DELETE(path, auth, callback) {
+  delete(...rest) {
     const { app } = this
-    app.delete(path, auth, callback)
+    app.delete(...arguments)
   }
-  PUT(path, auth, callback) {
+  put(...rest) {
     const { app } = this
-    app.put(path, auth, callback)
+    app.put(...arguments)
   }
 }
 

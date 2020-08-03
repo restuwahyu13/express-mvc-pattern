@@ -9,9 +9,9 @@ class UpdateMahasiswaRoute extends Controller {
     this.controller = new Controller(app)
     this.schema = mhsSchema
   }
-  Route() {
+  route() {
     const { controller, schema } = this
-    controller.PUT('/mhs/update/:id', AuthToken, (req, res) => {
+    controller.put('/mhs/update/:id', AuthToken, (req, res) => {
       return new UpdateMahasiswaController('mhs', schema, req, res).Controller()
     })
   }

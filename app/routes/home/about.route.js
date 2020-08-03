@@ -6,9 +6,9 @@ class AboutRoute extends Controller {
     this.controller = new Controller(app)
     this.v = View
   }
-  Route() {
+  route() {
     let { controller, v } = this
-    controller.GET('/about', (req, res) => {
+    controller.get('/about', (req, res) => {
       v.view(res, 'home.views/about', {
         title1: 'Follow Me in Github:',
         title2: 'restuwahyu13',

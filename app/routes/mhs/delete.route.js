@@ -8,9 +8,9 @@ class DeleteMahasiswaRoute extends Controller {
     this.controller = new Controller(app)
     this.schema = mhsSchema
   }
-  Route() {
+  route() {
     const { controller, schema } = this
-    controller.DELETE('/mhs/delete/:id', AuthToken, (req, res) => {
+    controller.delete('/mhs/delete/:id', AuthToken, (req, res) => {
       return new DeleteMahasiswaController('mhs', schema, req, res).Controller()
     })
   }

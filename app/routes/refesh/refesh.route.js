@@ -7,9 +7,9 @@ class RefeshTokenRoute extends Controller {
     this.controller = new Controller(app)
     this.schema = mhsSchema
   }
-  Route() {
+  route() {
     const { controller, schema } = this
-    controller.GET('/refeshtoken', [], (req, res) => {
+    controller.get('/refeshtoken', (req, res) => {
       return new RefeshTokenController('mhs', schema, req, res).Controller()
     })
   }

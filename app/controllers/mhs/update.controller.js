@@ -15,7 +15,7 @@ class UpdateMahasiswaController extends Model {
     this.msg = new CustomeMessage(res)
   }
 
-  async Controller() {
+  async controller() {
     const { req, res, id, name, npm, bid, fak, model, msg } = this
     const user = await model.findOneAndUpdate({ _id: id }, { name, npm, bid, fak })
 

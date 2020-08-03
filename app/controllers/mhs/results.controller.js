@@ -9,7 +9,7 @@ class ResultsMahasiswaController extends Model {
     this.model = new Model(collection, schema)
     this.msg = new CustomeMessage(res)
   }
-  async Controller() {
+  async controller() {
     const { req, res, model, msg } = this
     const users = await model.findAll()
 

@@ -6,9 +6,9 @@ class HomeRoute extends Controller {
     this.controller = new Controller(app)
     this.v = View
   }
-  Route() {
+  route() {
     let { controller, v } = this
-    controller.GET('/', (req, res) => {
+    controller.get('/', (req, res) => {
       v.view(res, 'home.views/index', {
         name: 'Restu Wahyu Saputra'
       })

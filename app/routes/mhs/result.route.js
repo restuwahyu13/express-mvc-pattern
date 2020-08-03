@@ -8,9 +8,9 @@ class ResultMahasiswaRoute extends Controller {
     this.controller = new Controller(app)
     this.schema = mhsSchema
   }
-  Route() {
+  route() {
     const { controller, schema } = this
-    controller.GET('/mhs/result/:id', AuthToken, (req, res) => {
+    controller.get('/mhs/result/:id', AuthToken, (req, res) => {
       return new ResultMahasiswaController('mhs', schema, req, res).Controller()
     })
   }

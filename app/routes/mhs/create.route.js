@@ -7,9 +7,9 @@ class CreateMahasiswaRoute extends Controller {
     this.controller = new Controller(app)
     this.schema = mhsSchema
   }
-  Route() {
+  route() {
     const { controller, schema } = this
-    controller.POST('/mhs/create', (req, res) => {
+    controller.post('/mhs/create', (req, res) => {
       return new CreateMahasiswaController('mhs', schema, req, res).Controller()
     })
   }

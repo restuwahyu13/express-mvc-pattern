@@ -11,7 +11,7 @@ class DeleteMahasiswaController extends Model {
     this.msg = new CustomeMessage(res)
   }
 
-  async Controller() {
+  async controller() {
     const { req, res, id, model, msg } = this
     const user = await model.findOneAndDelete({ _id: _id })
 

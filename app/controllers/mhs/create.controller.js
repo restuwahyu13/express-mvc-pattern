@@ -12,7 +12,7 @@ class CreateMahasiswaController extends Model {
     this.jwt = new Jwt()
   }
 
-  async Controller() {
+  async controller() {
     const { req, res, model, msg, jwt } = this
     const { name, npm, bid, fak } = req.body
 

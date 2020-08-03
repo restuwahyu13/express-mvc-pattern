@@ -6,7 +6,7 @@ class Connection extends Module {
   }
   async MongooseConnection() {
     const { db } = this
-    const connection = db.connect(process.env.MONGO_URI, {
+    const connection = await db.connect(process.env.MONGO_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useFindAndModify: true

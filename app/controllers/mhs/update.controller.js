@@ -3,20 +3,18 @@ const { CustomeMessage } = require(`${process.cwd()}/app/helpers/customeMessage`
 
 class UpdateMahasiswaController extends Model {
   constructor(collection, schema, req, res) {
-    super(collection, schema)
+    super()
     this.req = req
     this.res = res
     this.id = req.params.id
-    this.name = req.body.name
-    this.npm = req.body.npm
-    this.bid = req.body.bid
-    this.fak = req.body.fak
+    this.body = req.body
     this.model = new Model(collection, schema)
     this.msg = new CustomeMessage(res)
   }
 
   async controller() {
-    const { req, res, id, name, npm, bid, fak, model, msg } = this
+    const { req, res, id, body, model, msg } = this
+    const { name, npm, bid, fak } = body
     const user = await model.findOneAndUpdate({ _id: id }, { name, npm, bid, fak })
 
     if (!user) {

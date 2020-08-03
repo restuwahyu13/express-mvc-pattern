@@ -4,7 +4,7 @@ const { Jwt } = require(`${process.cwd()}/app/libs/jwt`)
 
 class CreateMahasiswaController extends Model {
   constructor(collection, schema, req, res) {
-    super(collection, schema)
+    super()
     this.req = req
     this.res = res
     this.model = new Model(collection, schema)
@@ -15,8 +15,8 @@ class CreateMahasiswaController extends Model {
   async controller() {
     const { req, res, model, msg, jwt } = this
     const { name, npm, bid, fak } = req.body
-
     const user = await model.findOneAndCreate({ name, npm, bid, fak })
+
     if (user) {
       msg.error('error', 409, {
         response: {

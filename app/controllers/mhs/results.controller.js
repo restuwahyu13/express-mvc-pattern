@@ -3,7 +3,7 @@ const { CustomeMessage } = require(`${process.cwd()}/app/helpers/customeMessage`
 
 class ResultsMahasiswaController extends Model {
   constructor(collection, schema, req, res) {
-    super(collection, schema)
+    super()
     this.req = req
     this.res = res
     this.model = new Model(collection, schema)

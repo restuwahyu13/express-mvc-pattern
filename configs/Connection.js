@@ -4,15 +4,16 @@ class Connection extends Module {
     super()
     this.db = this.mongoose()
   }
-  MongooseConnection() {
+  async MongooseConnection() {
     const { db } = this
-    db.connect(process.env.MONGO_URI, {
+    const connection = db.connect(process.env.MONGO_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useFindAndModify: true
     })
-      .then(() => console.log('Database Connected'))
-      .catch(() => console.log('Database Not Connected'))
+
+    if (!connection) return console.log('Database Connection Failed')
+    return console.log('Database Connection Successfuly')
   }
 }
 

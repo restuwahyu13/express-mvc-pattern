@@ -17,8 +17,9 @@ class App {
         if (worker.isDead()) console.log(`worker is dead ${worker.process.pid}`)
         cluster.fork()
       })
+    } else {
+      return http.createServer(app).listen(process.env.PORT, () => console.log('server is running'))
     }
-    return http.createServer(app).listen(process.env.PORT)
   }
 }
 

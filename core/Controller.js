@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+
 class Controller {
   get(...rest) {
     return router.get(...arguments)

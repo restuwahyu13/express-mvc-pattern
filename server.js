@@ -1,8 +1,10 @@
 const cluster = require('cluster')
 const os = require('os')
 const http = require('http')
-const app = require('./app')
-class App {
+const { app } = require('./app')
+const { Route } = require('./core/Route')
+
+class App extends Route {
   server() {
     if (cluster.isMaster) {
       let cpuCore = os.cpus().length
@@ -18,6 +20,9 @@ class App {
         cluster.fork()
       })
     } else {
+      //init default route
+      app.use(super.route())
+      // listenint server port
       http.createServer(app).listen(process.env.PORT)
     }
   }

@@ -1,4 +1,4 @@
-## Example MVC Architecture in Express
+### Express Model View Controller Pattern (MVC)
 
 **Berikut adalah** gambaran bagaimana kita dapat menerapkan sebuah konsep **MVC** pada aplikasi **NodeJS** kita mengunakan **Express Framework**, yang nantinya bisa teman - teman terapkan saat membuat sebuah aplikasi dengan mengunakan `Nodejs like Expres` atau yang lainnya.
 
@@ -63,24 +63,17 @@
 
 ```javascript
 class Controller {
-  constructor(app) {
-    this.app = app
-  }
   get(...rest) {
-    const { app } = this
-    app.get(...arguments)
+    return router.get(...arguments)
   }
   post(...rest) {
-    const { app } = this
-    app.post(...arguments)
+    return router.post(...arguments)
   }
   delete(...rest) {
-    const { app } = this
-    app.delete(...arguments)
+    return router.delete(...arguments)
   }
   put(...rest) {
-    const { app } = this
-    app.put(...arguments)
+    return router.put(...arguments)
   }
 }
 
@@ -91,12 +84,14 @@ module.exports = { Controller }
 
 ```javascript
 class Model {
-  constructor(collection, schema) {
-    this.model = new Module().mongoose().model(collection, schema)
+  constructor(schema) {
+    this.model = schema
   }
-  findAll() {
-    const { model } = this
-    return model.find({}).lean()
+
+  findAll(value) {
+    const { model,connection } = this
+    connection()
+    return model.find({ ...value }).lean()
   }
   findOne(value) {
     const { model } = this
@@ -106,24 +101,17 @@ class Model {
     const { model } = this
     return model.findById(value).lean()
   }
-  findOneAndCreate(value) {
+  async findOneAndCreate(value) {
     const { model } = this
-    const user = model
-      .findOne({ ...value })
-      .lean()
-      .exec(async (err, doc) => {
-        if (err) return error
-        const dataBody = new model({ ...value })
-        return dataBody.save()
-      })
+    return model.create({ ...value })
   }
   findOneAndDelete(value) {
     const { model } = this
     return model.findOneAndDelete({ ...value }).lean()
   }
-  findOneAndUpdate(action, value) {
+  findOneAndUpdate(id, value) {
     const { model } = this
-    return model.findOneAndUpdate({ ...action }, { $set: { ...value } }).lean()
+    return model.findOneAndUpdate({ ...id }, { $set: { ...value } }).lean()
   }
 }
 
@@ -134,7 +122,7 @@ module.exports = { Model }
 
 ```javascript
 class Route {
-  Routes(app) {
+  route() {
     return [
       // init mahasiswa route
       new CreateMahasiswaRoute(app).route(),
@@ -142,9 +130,6 @@ class Route {
       new ResultMahasiswaRoute(app).route(),
       new DeleteMahasiswaRoute(app).route(),
       new UpdateMahasiswaRoute(app).route(),
-
-      // init refesh token route
-      new RefeshTokenRoute(app).route(),
 
       //init home route
       new HomeRoute(app).route(),
@@ -245,42 +230,38 @@ module.exports = { Module }
 
 ```javascript
 class CreateMahasiswaController extends Model {
-  constructor(collection, schema, req, res) {
+  constructor() {
     super()
-    this.req = req
-    this.res = res
-    this.model = new Model(collection, schema)
-    this.msg = new CustomeMessage(res)
+    this.model = new Model(mhsSchema)
     this.jwt = new Jwt()
   }
 
-  async controller() {
-    const { req, res, model, msg, jwt } = this
-    const { name, npm, bid, fak } = req.body
-    const user = await model.findOneAndCreate({ name, npm, bid, fak })
+  async controller(req, res) {
+    const { model, jwt } = this
+    const { nama, npm, bid, fak } = req.body
+    const user = await model.findOne({ nama, npm, bid, fak })
 
     if (user) {
-      msg.error('error', 409, {
+      return new CustomeMessage(res).error(409, {
         response: {
           status: 'error',
           code: res.statusCode,
           method: req.method,
           message: 'Oops..data already exists in database',
-          data: { ...user }
+          data: user
         }
       })
     }
 
-    const token = jwt.createToken({ _id, name }, { expiresIn: '1d', algorithm: 'HS384' })
-    msg.success('success', 200, {
+    const { _id } = await model.findOneAndCreate({ nama, npm, bid, fak })
+    const token = jwt.createToken({ _id, nama }, { expiresIn: '1d', algorithm: 'HS384' })
+    return new CustomeMessage(res).success(200, {
       response: {
         status: 'success',
         code: res.statusCode,
         method: req.method,
         message: 'Yeah..data successuly store in database',
-        data: {
-          secret: token
-        }
+        access_token: token
       }
     })
   }
@@ -293,16 +274,11 @@ module.exports = { CreateMahasiswaController }
 
 ```javascript
 class CreateMahasiswaRoute extends Controller {
-  constructor(app) {
+  constructor() {
     super()
-    this.controller = new Controller(app)
-    this.schema = mhsSchema
   }
   route() {
-    const { controller, schema } = this
-    controller.post('/mhs/create', (req, res) => {
-      return new CreateMahasiswaController('mhs', schema, req, res).Controller()
-    })
+    return this.post('/mhs/create', (req, res) => new CreateMahasiswaController().controller(req, res))
   }
 }
 
@@ -312,7 +288,7 @@ module.exports = { CreateMahasiswaRoute }
 #### App
 
 ```javascript
-class App {
+class App extends Route {
   server() {
     if (cluster.isMaster) {
       let cpuCore = os.cpus().length
@@ -328,7 +304,10 @@ class App {
         cluster.fork()
       })
     } else {
-      return http.createServer(app).listen(process.env.PORT)
+      //init default route
+      app.use(super.route())
+      // listenint server port
+      http.createServer(app).listen(process.env.PORT)
     }
   }
 }

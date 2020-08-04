@@ -1,10 +1,14 @@
+const { Connection } = require(`${process.cwd()}/configs/Connection`)
+new Connection().MongooseConnection()
+
 class Model {
   constructor(schema) {
     this.model = schema
   }
 
   findAll(value) {
-    const { model } = this
+    const { model,connection } = this
+    connection()
     return model.find({ ...value }).lean()
   }
   findOne(value) {
@@ -15,7 +19,7 @@ class Model {
     const { model } = this
     return model.findById(value).lean()
   }
-  async findOneAndCreate(value) {
+  findOneAndCreate(value) {
     const { model } = this
     return model.create({ ...value })
   }

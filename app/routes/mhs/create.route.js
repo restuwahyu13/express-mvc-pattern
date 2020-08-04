@@ -1,5 +1,6 @@
 const { CreateMahasiswaController } = require(`${process.cwd()}/app/controllers/mhs/create.controller`)
 const { Controller } = require(`${process.cwd()}/core/Controller`)
+
 class CreateMahasiswaRoute extends Controller {
   constructor() {
     super()

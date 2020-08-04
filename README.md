@@ -101,7 +101,7 @@ class Model {
     const { model } = this
     return model.findById(value).lean()
   }
-  async findOneAndCreate(value) {
+  findOneAndCreate(value) {
     const { model } = this
     return model.create({ ...value })
   }

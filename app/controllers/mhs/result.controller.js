@@ -1,4 +1,4 @@
-const { Model } = require('/cores/Model')
+const { Model } = require('cores/Model')
 const { mhsSchema } = require('models/mhs.model')
 const { CustomeMessage } = require('helpers/customeMessage')
 

@@ -1,6 +1,6 @@
 const { DeleteMahasiswaController } = require('controllers/mhs/delete.controller')
 const { Controller } = require('cores/Controller')
-const AuthToken = require('middlewares/AuthToken`)
+const AuthToken = require('middlewares/AuthToken')
 
 class DeleteMahasiswaRoute extends Controller {
   constructor() {

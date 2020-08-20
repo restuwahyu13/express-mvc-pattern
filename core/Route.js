@@ -1,6 +1,6 @@
 // route mahasiswa
 const { CreateMahasiswaRoute } = require('routes/mhs/create.route')
-const { ResultsMahasiswaRoute } = require('routes/mhs/results.rout')
+const { ResultsMahasiswaRoute } = require('routes/mhs/results.route')
 const { ResultMahasiswaRoute } = require('routes/mhs/result.route')
 const { DeleteMahasiswaRoute } = require('routes/mhs/delete.route')
 const { UpdateMahasiswaRoute } = require('routes/mhs/update.route')

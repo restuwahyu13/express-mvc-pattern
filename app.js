@@ -1,3 +1,4 @@
+require('module-alias/register')
 const express = require('express')
 const app = express()
 const { Module } = require('configs/Module')

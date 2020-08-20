@@ -1,5 +1,5 @@
 const { Controller } = require('cores/Controller')
-const { View } = require('/cores/View')
+const { View } = require('cores/View')
 
 class AboutRoute extends Controller {
   constructor() {

@@ -1,6 +1,6 @@
-const { Module } = require(`${process.cwd()}/configs/Module`)
+const { Module } = require('configs/Module')
 const jwt = new Module().jwt()
-const { CustomeMessage } = require(`${process.cwd()}/app/helpers/customeMessage`)
+const { CustomeMessage } = require('helpers/customeMessage')
 
 module.exports = (req, res, next) => {
   // function custome message

@@ -1,5 +1,6 @@
-const { Controller } = require(`${process.cwd()}/core/Controller`)
-const { View } = require(`${process.cwd()}/core/View`)
+const { Controller } = require('cores/Controller')
+const { View } = require('/cores/View')
+
 class AboutRoute extends Controller {
   constructor() {
     super()

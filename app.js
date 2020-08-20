@@ -1,6 +1,6 @@
 const express = require('express')
 const app = express()
-const { Module } = require('./configs/Module')
+const { Module } = require('configs/Module')
 
 //init all module
 const mod = new Module(app)

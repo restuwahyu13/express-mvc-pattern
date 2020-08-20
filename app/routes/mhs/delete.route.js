@@ -1,6 +1,7 @@
-const { DeleteMahasiswaController } = require(`${process.cwd()}/app/controllers/mhs/delete.controller`)
-const { Controller } = require(`${process.cwd()}/core/Controller`)
-const AuthToken = require(`${process.cwd()}/app/middlewares/AuthToken`)
+const { DeleteMahasiswaController } = require('controllers/mhs/delete.controller')
+const { Controller } = require('cores/Controller')
+const AuthToken = require('middlewares/AuthToken`)
+
 class DeleteMahasiswaRoute extends Controller {
   constructor() {
     super()
@@ -8,9 +9,7 @@ class DeleteMahasiswaRoute extends Controller {
   }
   route() {
     const { auth } = this
-    return this.delete('/mhs/delete/:id', auth, (req, res) =>
-      new DeleteMahasiswaController().controller(req, res)
-    )
+    return this.delete('/mhs/delete/:id', auth, (req, res) => new DeleteMahasiswaController().controller(req, res))
   }
 }
 

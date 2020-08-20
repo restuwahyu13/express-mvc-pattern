@@ -1,16 +1,16 @@
 // route mahasiswa
-const { CreateMahasiswaRoute } = require(`${process.cwd()}/app/routes/mhs/create.route`)
-const { ResultsMahasiswaRoute } = require(`${process.cwd()}/app/routes/mhs/results.route`)
-const { ResultMahasiswaRoute } = require(`${process.cwd()}/app/routes/mhs/result.route`)
-const { DeleteMahasiswaRoute } = require(`${process.cwd()}/app/routes/mhs/delete.route`)
-const { UpdateMahasiswaRoute } = require(`${process.cwd()}/app/routes/mhs/update.route`)
+const { CreateMahasiswaRoute } = require('routes/mhs/create.route')
+const { ResultsMahasiswaRoute } = require('routes/mhs/results.rout')
+const { ResultMahasiswaRoute } = require('routes/mhs/result.route')
+const { DeleteMahasiswaRoute } = require('routes/mhs/delete.route')
+const { UpdateMahasiswaRoute } = require('routes/mhs/update.route')
 
 //route home
-const { HomeRoute } = require(`${process.cwd()}/app/routes/home/home.route`)
-const { AboutRoute } = require(`${process.cwd()}/app/routes/home/about.route`)
+const { HomeRoute } = require('routes/home/home.route')
+const { AboutRoute } = require('routes/home/about.route')
 
 class Route {
-  route() {
+  init() {
     return [
       // init mahasiswa route
       new CreateMahasiswaRoute().route(),

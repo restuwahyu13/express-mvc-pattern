@@ -89,7 +89,7 @@ class Model {
   }
 
   findAll(value) {
-    const { model,connection } = this
+    const { model, connection } = this
     connection()
     return model.find({ ...value }).lean()
   }
@@ -122,18 +122,18 @@ module.exports = { Model }
 
 ```javascript
 class Route {
-  route() {
+  init() {
     return [
       // init mahasiswa route
-      new CreateMahasiswaRoute(app).route(),
-      new ResultsMahasiswaRoute(app).route(),
-      new ResultMahasiswaRoute(app).route(),
-      new DeleteMahasiswaRoute(app).route(),
-      new UpdateMahasiswaRoute(app).route(),
+      new CreateMahasiswaRoute().route(),
+      new ResultsMahasiswaRoute().route(),
+      new ResultMahasiswaRoute().route(),
+      new DeleteMahasiswaRoute().route(),
+      new UpdateMahasiswaRoute().route(),
 
       //init home route
-      new HomeRoute(app).route(),
-      new AboutRoute(app).route()
+      new HomeRoute().route(),
+      new AboutRoute().route()
     ]
   }
 }
@@ -166,7 +166,7 @@ class Connection extends Module {
     const connection = await db.connect(process.env.MONGO_URI, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
-      useFindAndModify: true
+      useFindAndModify: false
     })
 
     if (!connection) return console.log('Database Connection Failed')
@@ -289,7 +289,7 @@ module.exports = { CreateMahasiswaRoute }
 
 ```javascript
 class App extends Route {
-  server() {
+  init() {
     if (cluster.isMaster) {
       let cpuCore = os.cpus().length
       for (let i = 0; i < cpuCore; i++) {
@@ -305,7 +305,7 @@ class App extends Route {
       })
     } else {
       //init default route
-      app.use(super.route())
+      app.use(super.init())
       // listenint server port
       http.createServer(app).listen(process.env.PORT)
     }
@@ -313,7 +313,7 @@ class App extends Route {
 }
 
 // init application
-new App().server()
+new App().init()
 ```
 
 **Semoga** dengan adanya tutorial ini bisa membantu teman - teman semua yang sedang belajar, khususnya belajar **NodeJs** dan nantinya bisa menerapkan konsep **MVC** pada aplikasi yang akan dibuat oleh teman - teman. **Terimakasih**

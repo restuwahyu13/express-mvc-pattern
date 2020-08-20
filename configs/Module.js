@@ -6,6 +6,7 @@ const mongoose = require('mongoose')
 const logger = require('morgan')
 const EventEmitter = require('events')
 const jsonwebtoken = require('jsonwebtoken')
+
 class Module {
   constructor(app) {
     this.app = app

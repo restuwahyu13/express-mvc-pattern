@@ -1,6 +1,7 @@
-const { ResultsMahasiswaController } = require(`${process.cwd()}/app/controllers/mhs/results.controller`)
-const { Controller } = require(`${process.cwd()}/core/Controller`)
-const AuthToken = require(`${process.cwd()}/app/middlewares/AuthToken`)
+const { ResultsMahasiswaController } = require('controllers/mhs/results.controller')
+const { Controller } = require('cores/Controller')
+const AuthToken = require('middlewares/AuthToken')
+
 class ResultsMahasiswaRoute extends Controller {
   constructor() {
     super()

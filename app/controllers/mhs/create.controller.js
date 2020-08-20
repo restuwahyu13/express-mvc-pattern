@@ -1,7 +1,7 @@
-const { Model } = require(`${process.cwd()}/core/Model`)
-const { mhsSchema } = require(`${process.cwd()}/app/models/mhs.model`)
-const { CustomeMessage } = require(`${process.cwd()}/app/helpers/customeMessage`)
-const { Jwt } = require(`${process.cwd()}/app/libs/jwt`)
+const { Model } = require('cores/Model')
+const { mhsSchema } = require('models/mhs.model')
+const { CustomeMessage } = require('helpers/customeMessage')
+const { Jwt } = require('libs/jwt')
 
 class CreateMahasiswaController extends Model {
   constructor() {

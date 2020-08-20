@@ -1,4 +1,4 @@
-const { Module } = require(`${process.cwd()}/configs/Module`)
+const { Module } = require('configs/Module')
 const mod = new Module()
 
 class CustomeMessage {

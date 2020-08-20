@@ -1,6 +1,7 @@
-const { Model } = require(`${process.cwd()}/core/Model`)
-const { mhsSchema } = require(`${process.cwd()}/app/models/mhs.model`)
-const { CustomeMessage } = require(`${process.cwd()}/app/helpers/customeMessage`)
+const { Model } = require('cores/Model')
+const { mhsSchema } = require('models/mhs.model')
+const { CustomeMessage } = require('helpers/customeMessage')
+
 class ResultsMahasiswaController extends Model {
   constructor() {
     super()

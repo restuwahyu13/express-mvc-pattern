@@ -1,4 +1,4 @@
-const { Connection } = require(`${process.cwd()}/configs/Connection`)
+const { Connection } = require('configs/Connection')
 new Connection().MongooseConnection()
 
 class Model {
@@ -7,7 +7,7 @@ class Model {
   }
 
   findAll(value) {
-    const { model,connection } = this
+    const { model } = this
     connection()
     return model.find({ ...value }).lean()
   }

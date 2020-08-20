@@ -1,4 +1,5 @@
 const { Module } = require('./Module')
+
 class Connection extends Module {
   constructor() {
     super()

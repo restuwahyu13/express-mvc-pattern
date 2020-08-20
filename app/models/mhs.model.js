@@ -1,4 +1,4 @@
-const { Module } = require(`${process.cwd()}/configs/Module`)
+const { Module } = require('configs/Module')
 const mongoose = new Module().mongoose()
 
 const setMhsSchema = new mongoose.Schema({

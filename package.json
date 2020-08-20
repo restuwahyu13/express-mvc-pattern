@@ -35,10 +35,11 @@
     "cores": "/core/",
     "configs": "/configs/",
     "controllers": "app/controllers/",
-    "helpers": "app/helper/",
-    "middlewares": "app/middleware/",
-    "models": "app/model/",
-    "routes": "app/route",
-    "views": "app/view/"
+    "helpers": "app/helpers/",
+    "middlewares": "app/middlewares/",
+    "models": "app/models/",
+    "routes": "app/routes",
+    "views": "app/views/",
+    "libs": "app/libs/"
   }
 }

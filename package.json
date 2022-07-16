@@ -1,45 +1,101 @@
 {
-  "name": "express-mvc",
+  "name": "express-mvc-pattern",
   "version": "1.0.0",
-  "description": "example oop and mvc arcitecture express",
-  "main": "index.js",
+  "description": "Express clean arhitecture for using OOP and MVC pattern",
+  "main": "dist/main.js",
   "scripts": {
-    "start": "node .",
-    "dev": "nodemon server.js"
+    "eslint": "eslint --fix \"src/**/*.ts\"",
+    "prettier": "prettier --write \"src/**/*.ts\"",
+    "formatter": "npm run eslint && npm run prettier",
+    "ts-watch": "nodemon src/main.ts",
+    "ts-bin:dev": "cross-env NODE_OPTIONS='--max_old_space_size=8192 --v8-pool-size=8 --zero-fill-buffers --no-global-search-paths --napi-modules' NODE_ENV=development npm run ts-watch",
+    "ts-bin:prod": "cross-env NODE_OPTIONS='--max_old_space_size=8192 --v8-pool-size=8 --zero-fill-buffers --no-global-search-paths --no-addons' && tsc -P tsconfig.json && tsc-alias && shx cp -r src/views dist",
+    "typeorm:seeding": "npm run ts-bin ./node_modules/typeorm-seeding/dist/cli.js",
+    "typeorm:cli": "npm run ts-bin ./node_modules/typeorm/cli.js",
+    "start:local": "pm2 start dist/pm2.config.js",
+    "start:docker": "pm2-runtime dist/pm2.config.js",
+    "cleanup": "rimraf dist",
+    "build": "npm run cleanup && npm run ts-bin:prod && npm run formatter",
+    "dev": "npm run ts-bin:dev",
+    "seed:config": "npm run typeorm:seeding config",
+    "seed:run": "npm run ts-bin ./node_modules/typeorm-seeding/dist/cli.js seed",
+    "seed:runrollmig": "npm run mig:rollback && npm run mig:latest && npm run seed:run",
+    "seed:runmig": "npm run mig:latest && npm run seed:run",
+    "mig:rollback": "npm run typeorm:cli schema:drop",
+    "mig:latest": "npm run typeorm:cli migration:run",
+    "mig:list": "npm run typeorm:cli migration:show",
+    "mig:make": "ts-node -r tsconfig-paths/register ./node_modules/typeorm/cli.js migration:create --name"
   },
+  "author": {
+    "name": "Restu Wahyu Saputra",
+    "email": "restuwahyu13@gmail.com",
+    "url": "https://github.com/restuwahyu13"
+  },
+  "maintainers": [
+    "Restu Wahyu Saputra"
+  ],
   "repository": {
     "type": "git",
-    "url": "restuwahyu13"
+    "url": "https://github.com/restuwahyu13/express-mvc-pattern"
   },
-  "keywords": [
-    "express",
-    "express-mvc",
-    "mvc-pattern"
-  ],
-  "author": "resuwahyu13",
   "license": "MIT",
+  "engines": {
+    "node": ">=16",
+    "npm": ">=8"
+  },
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "dotenv": "^8.2.0",
-    "ejs": "^3.0.1",
-    "express": "^4.17.1",
-    "jsonwebtoken": "^8.5.1",
-    "module-alias": "^2.2.2",
-    "mongoose": "^5.9.1"
+    "body-parser": "^1.20.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "ejs": "^3.1.8",
+    "express": "^4.18.1",
+    "express-async-errors": "^3.1.1",
+    "express-static-gzip": "^2.1.7",
+    "helmet": "^5.1.0",
+    "hpp": "^0.2.3",
+    "http-status-codes": "^2.2.0",
+    "morgan": "^1.10.0",
+    "pg": "^8.7.3",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.7.0",
+    "typedi": "^0.10.0",
+    "typeorm": "^0.3.7",
+    "typeorm-typedi-extensions": "^0.4.1"
   },
   "devDependencies": {
-    "morgan": "^1.9.1",
-    "nodemon": "^2.0.2"
-  },
-  "_moduleAliases": {
-    "cores": "core/",
-    "configs": "configs/",
-    "controllers": "app/controllers/",
-    "helpers": "app/helpers/",
-    "middlewares": "app/middlewares/",
-    "models": "app/models/",
-    "routes": "app/routes",
-    "views": "app/views/",
-    "libs": "app/libs/"
+    "@types/body-parser": "^1.19.2",
+    "@types/compression": "^1.7.2",
+    "@typescript-eslint/parser": "^5.3.0",
+    "@types/cors": "^2.8.12",
+    "@types/ejs": "^3.1.1",
+    "@types/express": "^4.17.13",
+    "@types/helmet": "^4.0.0",
+    "@types/hpp": "^0.2.2",
+    "@types/http-status-codes": "^1.2.0",
+    "@types/morgan": "^1.9.3",
+    "@types/node": "^18.0.5",
+    "@types/pg": "^8.6.5",
+    "@types/prettier": "^2.6.3",
+    "@types/rimraf": "^3.0.2",
+    "@types/shelljs": "^0.8.11",
+    "eslint": "^8.19.0",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-eslint-plugin": "^5.0.0",
+    "eslint-plugin-import": "^2.26.0",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "eslint-plugin-simple-import-sort": "^7.0.0",
+    "cross-env": "^7.0.3",
+    "nodemon": "^2.0.19",
+    "prettier": "^2.7.1",
+    "reload": "^3.2.0",
+    "rimraf": "^3.0.2",
+    "shx": "^0.3.4",
+    "ts-node": "^10.9.1",
+    "tsc-alias": "^1.6.11",
+    "tsconfig-paths": "^4.0.0",
+    "tslib": "^2.4.0",
+    "typescript": "^4.7.4"
   }
 }

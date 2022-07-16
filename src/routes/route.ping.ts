@@ -10,7 +10,7 @@ export class PingRoute {
   }
 
   main(): Router {
-    this.router.get('/', this.controller.ping())
+    this.router.all('**', this.controller.ping())
 
     return this.router
   }

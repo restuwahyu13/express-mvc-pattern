@@ -45,7 +45,7 @@ class App {
   }
 
   private async middleware(): Promise<void> {
-    this.app.use('/', express.static(path.resolve(process.cwd(), 'public/')))
+    this.app.use(express.static('.'))
     this.app.use(bodyParser.json({ limit: '1mb' }))
     this.app.use(bodyParser.urlencoded({ extended: true }))
     this.app.use(helmet({ contentSecurityPolicy: false }))
@@ -65,8 +65,7 @@ class App {
         memLevel: zlib.constants.Z_BEST_COMPRESSION
       })
     )
-    this.app.use('/',
-      staticGzip(path.resolve(process.cwd(), 'public/'), {
+    this.app.use(staticGzip('.', {
         enableBrotli: true,
         index: false,
         customCompressions: [

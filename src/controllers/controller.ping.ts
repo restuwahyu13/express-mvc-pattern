@@ -14,7 +14,7 @@ export class PingController {
         const response: APIResponse = await this.service.ping()
         res.status(response.stat_code).render('ping', response)
       } catch (e: any) {
-        res.status(e.stat_code).render('index', e)
+        res.status(e.stat_code).render('error', { error: e })
       }
     }
   }

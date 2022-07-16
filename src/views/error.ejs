@@ -1,0 +1,8 @@
+<%- include('templates/header') -%>
+
+<div class="flex justify-center align-middle items-center shadow-lg w-11/12 box-content">
+  <p class="text-xl font-semibold space-y-5">Error Response:</p>
+  <div class="w-full mt-10 translate-y-10 bg-gray-800 text-white"><% JSON.stringify(error) %></div>
+</div>
+
+<%- include('templates/footer') -%>

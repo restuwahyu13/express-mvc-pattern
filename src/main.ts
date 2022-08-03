@@ -37,14 +37,14 @@ class App {
     return createConnection()
   }
 
-  private async config(): Promise<void> {
+  private config(): void {
     this.app.set('views', path.resolve(__dirname, 'views'))
     this.app.set('view engine', 'ejs')
     this.app.disable('x-powered-by')
     Container.resolve<AppModule>(AppModule)
   }
 
-  private async middleware(): Promise<void> {
+  private middleware(): void {
     this.app.use(express.static('.'))
     this.app.use(bodyParser.json({ limit: '1mb' }))
     this.app.use(bodyParser.urlencoded({ extended: true }))
@@ -91,11 +91,11 @@ class App {
     }
   }
 
-  private async route(): Promise<void> {
+  private async route(): void {
     this.app.use('**', Container.resolve<Router>('PingModule'))
   }
 
-  private async run(): Promise<void> {
+  private async run(): void {
     const serverInfo: string = `Server is running on port: ${this.port} - ${this.env}`
     const server: Server = this.server
     const port: number = this.port
@@ -113,7 +113,7 @@ class App {
     }
   }
 
-  public async main(): Promise<void> {
+  public main(): void {
     await this.connection()
     await this.config()
     await this.middleware()
@@ -127,5 +127,5 @@ class App {
  */
 
 ;(async function () {
-  if (process.env.NODE_ENV != 'test') await Container.resolve<App>(App).main()
+  if (process.env.NODE_ENV != 'test') Container.resolve<App>(App).main()
 })()

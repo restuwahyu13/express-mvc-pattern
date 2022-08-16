@@ -91,11 +91,11 @@ class App {
     }
   }
 
-  private async route(): void {
+  private route(): void {
     this.app.use('**', Container.resolve<Router>('PingModule'))
   }
 
-  private async run(): void {
+  private run(): void {
     const serverInfo: string = `Server is running on port: ${this.port} - ${this.env}`
     const server: Server = this.server
     const port: number = this.port
@@ -114,11 +114,11 @@ class App {
   }
 
   public main(): void {
-    await this.connection()
-    await this.config()
-    await this.middleware()
-    await this.route()
-    await this.run()
+     this.connection()
+     this.config()
+     this.middleware()
+     this.route()
+     this.run()
   }
 }
 
@@ -126,6 +126,6 @@ class App {
  * @description boostraping app and run app with env development / production
  */
 
-;(async function () {
-  if (process.env.NODE_ENV != 'test') Container.resolve<App>(App).main()
+;(function () {
+  Container.resolve<App>(App).main()
 })()
